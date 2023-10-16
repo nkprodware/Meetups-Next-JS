@@ -6,8 +6,8 @@ import { Fragment } from "react";
 function HomePage(props) {
   return (
     <Fragment>
-      <DocumentHead htmlMeta={props.meetups} />;
-      <MeetupList meetups={props.meetups} />;
+      <DocumentHead htmlMeta={props.meetups} />
+      <MeetupList meetups={props.meetups} />
     </Fragment>
   );
 }
