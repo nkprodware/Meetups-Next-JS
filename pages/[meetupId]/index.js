@@ -9,11 +9,11 @@ function MeetupDetails(props) {
     <Fragment>
       <DocumentHead htmlMeta={props.meetupsData} />
       <MeetupDetail
-        image={props.meetupsData.image}
-        title={props.meetupsData.title}
-        description={props.meetupsData.description}
-        address={props.meetupsData.address}
-        id={props.meetupsData.id}
+        image={props.meetupsData?.image}
+        title={props.meetupsData?.title}
+        description={props.meetupsData?.description}
+        address={props.meetupsData?.address}
+        id={props.meetupsData?.id}
       />
     </Fragment>
   );
@@ -47,19 +47,29 @@ export async function getStaticProps(context) {
     _id: new ObjectId(meetupId),
   });
 
+  //JSON.parse(JSON.stringify(selectedMeetup))
+
   client.close();
 
-  return {
-    props: {
-      meetupsData: {
-        id: selectedMeetup._id.toString(),
-        image: selectedMeetup.image,
-        title: selectedMeetup.title,
-        description: selectedMeetup.description,
-        address: selectedMeetup.address,
+  if (selectedMeetup) {
+    return {
+      props: {
+        meetupsData: {
+          id: selectedMeetup?._id?.toString(),
+          image: selectedMeetup.image
+            ? selectedMeetup?.image?.toString()
+            : null,
+          title: selectedMeetup.title ? selectedMeetup?.title : null,
+          address: selectedMeetup.address ? selectedMeetup.address : null,
+          description: selectedMeetup?.description,
+        },
       },
-    },
-  };
+    };
+  } else {
+    return {
+      props: {},
+    };
+  }
 }
 
 export default MeetupDetails;

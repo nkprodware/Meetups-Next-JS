@@ -9,10 +9,10 @@ function MeetupItem(props) {
     router.push("/" + props.id);
   }
   return (
-    <li className={classes.item}>
+    <li className={classes.item} key={props.id}>
       <Card>
         <div className={classes.image}>
-          <img src={props.image} alt={props.title} />
+          {<img src={props.image} alt={props.title} />}
         </div>
         <div className={classes.content}>
           <h3>{props.title}</h3>

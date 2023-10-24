@@ -20,18 +20,24 @@ export async function getStaticProps() {
   const meetupsCollection = db.collection("meetups");
   const meetups = await meetupsCollection.find().toArray();
 
-  return {
-    props: {
-      meetups: meetups.map((meetup) => ({
-        title: meetup.title,
-        image: meetup.image,
-        address: meetup.address,
-        id: meetup._id.toString(),
-        description: meetup.description,
-      })),
-    },
-    revalidate: 1,
-  };
+  if (meetups) {
+    return {
+      props: {
+        meetups: meetups.map((meetup) => ({
+          title: meetup.title ? meetup.title : null,
+          image: meetup.image ? meetup.image : null,
+          address: meetup.address ? meetup.address : null,
+          id: meetup._id.toString(),
+          description: meetup.description,
+        })),
+      },
+      revalidate: 1,
+    };
+  } else {
+    return {
+      props: null,
+    };
+  }
 }
 
 // export async function getServerSideProps(context) {
